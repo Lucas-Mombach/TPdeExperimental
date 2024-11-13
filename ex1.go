@@ -15,9 +15,7 @@ func main() {
     var bSurvives int = 0 // Count of Player B's victories
     var playerA bool
     var playerB bool
-    var coin bool
-    var bGoesFirst int = 0 // Count of times Player B goes first
-    var aGoesFirst int = 0 // Count of times Player A goes first
+    var timeToShoot bool
 
     rand.Seed(time.Now().UnixNano())
     num1, err := strconv.Atoi(os.Args[1])
@@ -51,7 +49,7 @@ func main() {
     for i := 0; i < num1; i++ {
         // Continue the duel until one player wins
         for {
-            if coin {
+            if timeToShoot {
                 // Player A's turn
                 playerA = rand.Intn(101) > num2
                 if playerA {
@@ -60,7 +58,7 @@ func main() {
                     break
                 }
                 // Player A missed, switch to Player B's turn
-                coin = false
+                timeToShoot = false
             } else {
                 // Player B's turn
                 playerB = rand.Intn(101) > num3
@@ -70,7 +68,7 @@ func main() {
                     break
                 }
                 // Player B missed, switch to Player A's turn
-                coin = true
+                timeToShoot = true
             }
         }
     }
@@ -81,7 +79,6 @@ func main() {
     _, err = fmt.Fprintf(file, "Player B survives: %v \n", bSurvives)
     _, err = fmt.Fprintf(file, "A survives in %v%% of the duels\n", aSurvives*100/num1)
     _, err = fmt.Fprintf(file, "B survives in %v%% of the duels\n", bSurvives*100/num1)
-    _, err = fmt.Fprintf(file, "B was the first: %v \n", bGoesFirst)
 
     if err != nil {
         fmt.Println("Error writing to file:", err)
