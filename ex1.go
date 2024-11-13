@@ -49,16 +49,6 @@ func main() {
     // The duel begins
     // Loop through the simulations
     for i := 0; i < num1; i++ {
-        number := rand.Intn(101)
-        if number > 50 {
-            // Player A goes first
-            coin = true
-            aGoesFirst++
-        } else {
-            // Player B goes first
-            bGoesFirst++
-        }
-
         // Continue the duel until one player wins
         for {
             if coin {
