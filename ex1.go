@@ -20,18 +20,24 @@ func main() {
     var aGoesFirst int = 0 // Count of times Player A goes first
 
     rand.Seed(time.Now().UnixNano())
-
-    if len(os.Args) < 2 {
-        fmt.Println("Usage: go run file.go <value>")
-        return
-    }
-
-    num, err := strconv.Atoi(os.Args[1])
+    num1, err := strconv.Atoi(os.Args[1])
     if err != nil {
         fmt.Println("Error:", err)
         return
     }
-    numb = num
+
+    num2, err := strconv.Atoi(os.Args[2])
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    num3, err := strconv.Atoi(os.Args[3])
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    numb = num1
 
     file, err := os.Create("duel.txt")
     if err != nil {
@@ -42,8 +48,8 @@ func main() {
 
     // The duel begins
     // Loop through the simulations
-    for i := 0; i < numb; i++ {
-        number := rand.Intn(100)
+    for i := 0; i < num1; i++ {
+        number := rand.Intn(101)
         if number > 50 {
             // Player A goes first
             coin = true
@@ -57,7 +63,7 @@ func main() {
         for {
             if coin {
                 // Player A's turn
-                playerA = rand.Intn(100) > 50
+                playerA = rand.Intn(101) > num2
                 if playerA {
                     // Player A wins the duel
                     aSurvives++
@@ -67,7 +73,7 @@ func main() {
                 coin = false
             } else {
                 // Player B's turn
-                playerB = rand.Intn(100) > 50
+                playerB = rand.Intn(101) > num3
                 if playerB {
                     // Player B wins the duel
                     bSurvives++
@@ -80,11 +86,11 @@ func main() {
     }
 
     // Write results to file
-    _, err = fmt.Fprintf(file, "Number of duels: %v \n", numb)
+    _, err = fmt.Fprintf(file, "Number of duels: %v \n", num1)
     _, err = fmt.Fprintf(file, "Player A survives: %v \n", aSurvives)
     _, err = fmt.Fprintf(file, "Player B survives: %v \n", bSurvives)
-    _, err = fmt.Fprintf(file, "A survives in %v%% of the duels\n", aSurvives*100/numb)
-    _, err = fmt.Fprintf(file, "B survives in %v%% of the duels\n", bSurvives*100/numb)
+    _, err = fmt.Fprintf(file, "A survives in %v%% of the duels\n", aSurvives*100/num1)
+    _, err = fmt.Fprintf(file, "B survives in %v%% of the duels\n", bSurvives*100/num1)
     _, err = fmt.Fprintf(file, "B was the first: %v \n", bGoesFirst)
 
     if err != nil {
@@ -92,5 +98,5 @@ func main() {
         return
     }
 
-    fmt.Printf("Simulated %v duels\n", numb)
+    fmt.Printf("Simulated %v duels\n", num1)
 }
